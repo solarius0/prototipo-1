@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para Dayanna</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #080808;
+      color: #e0e0e0;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Fondo elegante sin motivos florales */
+    .bg-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 20%, rgba(100, 0, 20, 0.2) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(40, 0, 10, 0.25) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(10, 10, 10, 0.9) 0%, rgba(4, 4, 4, 0.98) 100%);
+      z-index: -1;
+    }
+
+    .card {
+      background: rgba(18, 14, 16, 0.85);
+      border: 1px solid rgba(139, 0, 0, 0.3);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(139, 0, 0, 0.15);
+      border-radius: 16px;
+      max-width: 600px;
+      width: 100%;
+      padding: 35px 30px;
+      backdrop-filter: blur(8px);
+      text-align: center;
+      position: relative;
+    }
+
+    .step {
+      display: none;
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    .step.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      color: #ff4d6d;
+      margin-bottom: 10px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .sub-text {
+      font-size: 0.95rem;
+      color: #a0a0a0;
+      margin-bottom: 25px;
+      font-style: italic;
+    }
+
+    .timer-container {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin: 30px 0;
+    }
+
+    .time-box {
+      background: rgba(35, 10, 15, 0.6);
+      border: 1px solid rgba(180, 40, 60, 0.3);
+      padding: 12px 10px;
+      border-radius: 10px;
+      min-width: 70px;
+    }
+
+    .time-value {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: #ff85a1;
+    }
+
+    .time-label {
+      font-size: 0.75rem;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    .intro-msg {
+      font-size: 1rem;
+      color: #cccccc;
+      line-height: 1.7;
+      margin-bottom: 30px;
+      text-align: justify;
+    }
+
+    .letter-text {
+      font-size: 1.02rem;
+      color: #dcdcdc;
+      line-height: 1.8;
+      text-align: left;
+      white-space: pre-line;
+      margin-bottom: 30px;
+      max-height: 380px;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+
+    .letter-text::-webkit-scrollbar {
+      width: 5px;
+    }
+    .letter-text::-webkit-scrollbar-track {
+      background: rgba(20, 20, 20, 0.5);
+    }
+    .letter-text::-webkit-scrollbar-thumb {
+      background: rgba(139, 0, 0, 0.5);
+      border-radius: 4px;
+    }
+
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      background: linear-gradient(135deg, #8b0000 0%, #4a000d 100%);
+      color: #ffffff;
+      border: 1px solid rgba(255, 100, 120, 0.3);
+      padding: 12px 24px;
+      border-radius: 25px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(139, 0, 0, 0.3);
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #a80000 0%, #660012 100%);
+      box-shadow: 0 6px 20px rgba(255, 77, 109, 0.4);
+      transform: translateY(-2px);
+    }
+
+    button.btn-secondary {
+      background: rgba(30, 30, 30, 0.8);
+      border: 1px solid #444;
+      color: #bbb;
+      box-shadow: none;
+    }
+
+    button.btn-secondary:hover {
+      background: rgba(50, 50, 50, 0.9);
+      color: #fff;
+    }
+
+    .final-choices {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .final-btn {
+      width: 100%;
+      padding: 15px;
+      font-size: 1rem;
+    }
+
+    .sparkle-icon {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+      color: #a80000;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-overlay"></div>
+
+  <div class="card">
+    
+    <!-- PASO 1: Temporizador e Inicio -->
+    <div class="step active" id="step1">
+      <div class="sparkle-icon">✦ ✧ ✦</div>
+      <h1>El tiempo que marcaste</h1>
+      <p class="sub-text">Desde aquel 16 de septiembre...</p>
+
+      <div class="timer-container">
+        <div class="time-box">
+          <div class="time-value" id="days">0</div>
+          <div class="time-label">Días</div>
+        </div>
+        <div class="time-box">
+          <div class="time-value" id="hours">0</div>
+          <div class="time-label">Horas</div>
+        </div>
+        <div class="time-box">
+          <div class="time-value" id="minutes">0</div>
+          <div class="time-label">Minutos</div>
+        </div>
+        <div class="time-box">
+          <div class="time-value" id="seconds">0</div>
+          <div class="time-label">Segundos</div>
+        </div>
+      </div>
+
+      <p class="intro-msg">
+        Cada segundo desde ese día quedó grabado en mi memoria. Hubo momentos llenos de luz, conversaciones que no quería que terminaran e ilusiones que guardé muy dentro de mí. Hoy miro este tiempo recorrido y necesito decirte todo lo que se quedó guardado en mi corazón.
+      </p>
+
+      <div class="btn-container">
+        <button onclick="goToStep(2)">Pasar a la nota 1 →</button>
+      </div>
+    </div>
+
+    <!-- PASO 2: Nota 1 -->
+    <div class="step" id="step2">
+      <div class="sparkle-icon">✨</div>
+      <h1>Lo que siento por ti</h1>
+      <p class="sub-text">Nota 1</p>
+
+      <div class="letter-text">
+Te quiero decir que te amo y que siempre lo haré, pase lo que pase. Aunque me vaya a otro país, aunque algún día ya no me quieras, aunque quieras a otra persona, aunque ya no estemos juntos o incluso aunque dejemos de hablarnos, yo siempre voy a guardar este amor por ti.
+
+Aunque llegue otra chica, yo te seguiría eligiendo a ti. Para mí eres perfecta tal y como eres. Siento que eres esa parte de mí que me faltaba, ese amor que tanto necesitaba. Para mí eres muchísimo y siempre vas a tener un lugar especial en mi corazón.
+
+Desearía que siempre estuvieras a mi lado, aunque sé que no puedo saber qué pasará en el futuro. Quizás algún día conozcas a alguien que te haga feliz, que te trate bien y que ames muchísimo. Y si algún día pasa, solo quiero que seas feliz.
+      </div>
+
+      <div class="btn-container">
+        <button class="btn-secondary" onclick="goToStep(1)">← Retroceder</button>
+        <button onclick="goToStep(3)">Avanzar a nota 2 →</button>
+      </div>
+    </div>
+
+    <!-- PASO 3: Nota 2 -->
+    <div class="step" id="step3">
+      <div class="sparkle-icon">✦</div>
+      <h1>El momento de despedirme</h1>
+      <p class="sub-text">Nota 2</p>
+
+      <div class="letter-text">
+Dayanna siento que ya es momento de dejarte ir y voy a intentar solo amarte en silencio espero que seas feliz y tengas todo el amor y felicidad que yo no te pude dar y que puedas conseguir a alguien mejor que yo y que te pueda dar todo lo que necesites enserio me va a doler dejarte ir porque fuistes a la chica que más amé enserio se siente horrible escribir esto sabiendo que después quizás me arrepienta y esté llorando como casi siempre lo hago y tmb me duele xq eras la chica con la que quería todo pero ahí algo bueno estos días que estuve contigo se sintieron fantásticos pensé que todo iba a salir bien pero terminé siendo un estúpido pensando cosas que en verdad jamás iba a pasar voy a intentar fingir que no me dolió pero nunca voy a olvidar esas veces que estaba tan feliz pensado que había encontrado al amor de mi vida y la verdad siento que alejándome es la mejor manera de que tú estés feliz.
+
+Tmb me duele apartarme de ti de tu vida sabiendo que aún te amo, me pone tan feliz pensar en esas noches que me quedaba pensando en que por fin había encontrado a la chica indicada y me acuerdo tmb cuando rezaba a Dios pidiendo que todo salga bien y que te cuide.
+      </div>
+
+      <div class="btn-container">
+        <button class="btn-secondary" onclick="goToStep(2)">← Retroceder</button>
+        <button onclick="goToStep(4)">Ir a la parte final →</button>
+      </div>
+    </div>
+
+    <!-- PASO 4: Decisión / Final -->
+    <div class="step" id="step4">
+      <div class="sparkle-icon">✧ ✦ ✧</div>
+      <h1>Ahora te lo dejo a ti</h1>
+      <p class="sub-text">Dayanna, el último capítulo depende de ti...</p>
+
+      <div class="intro-msg" style="text-align: center; margin-bottom: 20px;">
+        Puse mi corazón en cada palabra. Ahora te dejo estas dos opciones para que decidas qué pasa después de esta noche:
+      </div>
+
+      <div class="final-choices">
+        <button class="final-btn" onclick="responseChoice('Quiero seguir a tu lado amándote')">
+          Quiero seguir a tu lado amándote
+        </button>
+        <button class="final-btn btn-secondary" onclick="responseChoice('Entiendo todo... gracias por haberme amado así. Cuídate mucho.')">
+          Gracias por todo... descansa y cuídate mucho
+        </button>
+      </div>
+
+      <div class="btn-container" style="margin-top: 25px;">
+        <button class="btn-secondary" onclick="goToStep(3)">← Volver a leer la nota 2</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function getStartDate() {
+      const now = new Date();
+      let year = now.getFullYear();
+      let startDate = new Date(year, 8, 16);
+      if (now < startDate) {
+        startDate = new Date(year - 1, 8, 16);
+      }
+      return startDate;
+    }
+
+    const startDate = getStartDate();
+
+    function updateTimer() {
+      const now = new Date();
+      const diff = now - startDate;
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      document.getElementById('days').innerText = days;
+      document.getElementById('hours').innerText = hours;
+      document.getElementById('minutes').innerText = minutes;
+      document.getElementById('seconds').innerText = seconds;
+    }
+
+    setInterval(updateTimer, 1000);
+    updateTimer();
+
+    function goToStep(stepNumber) {
+      document.querySelectorAll('.step').forEach(step => {
+        step.classList.remove('active');
+      });
+      document.getElementById('step' + stepNumber).classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    function responseChoice(msg) {
+      alert("Elegiste: \n\n\"" + msg + "\"");
+    }
+  </script>
+</body>
+</html>	
